@@ -1,6 +1,7 @@
 import 'package:cv_maker/utils/routes/routes_name.dart';
-import 'package:cv_maker/view/home_screen.dart';
-import 'package:cv_maker/view/login_screen.dart';
+import 'package:cv_maker/view/auth_screen/home_screen.dart';
+import 'package:cv_maker/view/auth_screen/login_screen.dart';
+import 'package:cv_maker/view/splash_screen/splash_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -12,6 +13,9 @@ class Routes {
 
       case RoutesName.login:
         return MaterialPageRoute(builder: (_) => const LoginScreen());
+
+      case RoutesName.splash:
+        return MaterialPageRoute(builder: (_) => const SplashScreen());
 
       default:
         return MaterialPageRoute(builder: (_) {

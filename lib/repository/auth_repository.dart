@@ -1,6 +1,6 @@
 import 'package:cv_maker/data/network/BaseApiServices.dart';
 import 'package:cv_maker/data/network/NetworkApiServices.dart';
-import 'package:cv_maker/resources/app_url.dart';
+import 'package:cv_maker/resources/consts/app_url.dart';
 
 class AuthRepository {
   final BaseApiServices _apiServices = NetworkApiServices();

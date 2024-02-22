@@ -1,8 +1,10 @@
+import 'package:cv_maker/resources/consts/color.dart';
 import 'package:cv_maker/utils/routes/routes.dart';
 import 'package:cv_maker/utils/routes/routes_name.dart';
-import 'package:cv_maker/view/login_screen.dart';
+import 'package:cv_maker/view/auth_screen/login_screen.dart';
 import 'package:cv_maker/view_model/auth_view_model.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
 void main() {
@@ -21,11 +23,13 @@ class MyApp extends StatelessWidget {
         ],
         child: MaterialApp(
           title: 'Flutter Demo',
+
           theme: ThemeData(
+            textTheme: GoogleFonts.robotoTextTheme(),
             colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
             useMaterial3: true,
           ),
-          initialRoute: RoutesName.login,
+          initialRoute: RoutesName.home,
           onGenerateRoute: Routes.generateRoute,
           //home: const LoginScreen(),
         ));

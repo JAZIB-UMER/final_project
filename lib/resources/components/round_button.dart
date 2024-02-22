@@ -1,4 +1,4 @@
-import 'package:cv_maker/resources/color.dart';
+import 'package:cv_maker/resources/consts/color.dart';
 import 'package:flutter/material.dart';
 
 class RoundButton extends StatelessWidget {
@@ -20,7 +20,7 @@ class RoundButton extends StatelessWidget {
         width: 200,
         child: loading
             ? const CircularProgressIndicator(
-                color: AppColors.whiteColor,
+                color: whiteColor,
               )
             : Text(title),
       ),

@@ -1,5 +1,3 @@
-import 'dart:js_util';
-
 import 'package:cv_maker/repository/auth_repository.dart';
 import 'package:cv_maker/utils/utils.dart';
 import 'package:flutter/cupertino.dart';
