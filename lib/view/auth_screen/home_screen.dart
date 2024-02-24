@@ -56,7 +56,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   height: 20,
                 ),
                 Text(
-                  'HI, JAZIB UMER',
+                  'HI, JAZIB UMER Umer',
                   style: TextStyle(
                       fontFamily: bold,
                       fontSize: 30,
