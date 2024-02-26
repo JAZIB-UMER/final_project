@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:cv_maker/utils/routes/routes_name.dart';
 import 'package:cv_maker/view/auth_screen/login_screen.dart';
+import 'package:cv_maker/view/splash_screen/splash_services.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 
@@ -13,11 +14,10 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
+  SplashServices _splashServices = SplashServices();
   @override
   initState() {
-    Timer(Duration(seconds: 5), () {
-      Navigator.pushNamed(context, RoutesName.home);
-    });
+    _splashServices.isLogin(context);
 
     super.initState();
   }

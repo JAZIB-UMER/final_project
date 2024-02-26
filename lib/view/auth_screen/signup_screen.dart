@@ -1,32 +1,35 @@
 import 'package:cv_maker/repository/services/firebase_services.dart';
-import 'package:cv_maker/resources/components/round_button.dart';
-import 'package:cv_maker/resources/consts/consts.dart';
 import 'package:cv_maker/utils/routes/routes_name.dart';
-import 'package:cv_maker/utils/utils.dart';
-import 'package:cv_maker/view_model/auth_view_model.dart';
-
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class LoginScreen extends StatefulWidget {
-  const LoginScreen({super.key});
+import '../../resources/components/round_button.dart';
+import '../../resources/consts/color.dart';
+import '../../utils/utils.dart';
+import '../../view_model/auth_view_model.dart';
+
+class SignUpScreen extends StatefulWidget {
+  const SignUpScreen({super.key});
 
   @override
-  State<LoginScreen> createState() => _LoginScreenState();
+  State<SignUpScreen> createState() => _SignUpScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
-  //FirebaseAuth _auth = FirebaseAuth.instance;
-  final FireBaseServices _firebaseservices = FireBaseServices();
+class _SignUpScreenState extends State<SignUpScreen> {
+  // FirebaseAuth _auth = FirebaseAuth.instance;
+  FireBaseServices _myRepo = FireBaseServices();
   TextEditingController _emailController = TextEditingController();
   TextEditingController _passwordController = TextEditingController();
+  TextEditingController _userNameController = TextEditingController();
   @override
-  // ValueNotifier<bool> _obscurePassword = ValueNotifier<bool>(true);
+  // ValueNotifier<bool> _obsecurePassword = ValueNotifier<bool>(true);
   //FocusNode emailFocusNode = FocusNode();
 
-  @override
   void dispose() {
     _emailController.dispose();
     _passwordController.dispose();
+    _userNameController.dispose();
     super.dispose();
   }
 
@@ -50,18 +53,39 @@ class _LoginScreenState extends State<LoginScreen> {
                   child: Image.asset('assets/icons/cv_maker_logo.png'),
                 ),
               ),
+              Text(
+                'SignUp',
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30),
+              ),
+              SizedBox(
+                height: 20,
+              ),
+              TextFormField(
+                controller: _userNameController,
+                decoration: InputDecoration(
+                  hintText: 'UserName',
+                  prefixIcon: Icon(Icons.email_outlined),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10),
+                    borderSide: BorderSide(color: lightBlue),
+                  ),
+                ),
+              ),
+              SizedBox(
+                height: 20,
+              ),
               TextFormField(
                 controller: _emailController,
                 decoration: InputDecoration(
                   hintText: 'Email',
-                  prefixIcon: const Icon(Icons.email_outlined),
+                  prefixIcon: Icon(Icons.email_outlined),
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(10),
-                    borderSide: const BorderSide(color: lightBlue),
+                    borderSide: BorderSide(color: lightBlue),
                   ),
                 ),
               ),
-              const SizedBox(
+              SizedBox(
                 height: 20,
               ),
               Consumer<AuthViewModel>(builder: (context, object, index) {
@@ -70,7 +94,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   obscureText: object.obscureText,
                   decoration: InputDecoration(
                     hintText: 'Password',
-                    prefixIcon: const Icon(Icons.lock_outline_rounded),
+                    prefixIcon: Icon(Icons.lock_outline_rounded),
                     suffixIcon: InkWell(
                       onTap: () {
                         object.changeObscure();
@@ -86,21 +110,12 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                 );
               }),
-              const SizedBox(
+              SizedBox(
                 height: 20,
-              ),
-              InkWell(
-                onTap: () {
-                  Navigator.pushNamed(context, RoutesName.signUp);
-                },
-                child: const Text('Dont Have an account'),
-              ),
-              const SizedBox(
-                height: 10,
               ),
               Consumer<AuthViewModel>(builder: (context, object, index) {
                 return RoundButton(
-                  title: 'Login',
+                  title: 'Sign Up',
                   loading: object.loading,
                   onPress: () async {
                     if (_emailController.text.isEmpty) {
@@ -114,14 +129,19 @@ class _LoginScreenState extends State<LoginScreen> {
                           'Password length is short', Colors.red, context);
                     } else {
                       object.setLoading(true);
-                      await _firebaseservices
-                          .login(context, _emailController.text,
-                              _passwordController.text)
+                      await _myRepo
+                          .signUp(
+                              context,
+                              _emailController.text,
+                              _passwordController.text,
+                              _userNameController.text)
                           .then((value) {
-                        object.setLoading(false);
                         _emailController.clear();
                         _passwordController.clear();
-                        Navigator.pushNamed(context, RoutesName.home);
+                        _userNameController.clear();
+                        object.setLoading(false);
+                        Navigator.pushReplacementNamed(
+                            context, RoutesName.home);
                       }).onError((error, stackTrace) {
                         object.setLoading(false);
                         Utils.flushBarErrorMessage(

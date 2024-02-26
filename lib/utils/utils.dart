@@ -18,7 +18,8 @@ class Utils {
         toastLength: Toast.LENGTH_SHORT);
   }
 
-  static void flushBarErrorMessage(String message, BuildContext context) {
+  static void flushBarErrorMessage(
+      String message, Color color, BuildContext context) {
     showFlushbar(
       context: context,
       flushbar: Flushbar(
@@ -29,7 +30,7 @@ class Utils {
         duration: const Duration(seconds: 3),
         borderRadius: BorderRadius.circular(8),
         flushbarPosition: FlushbarPosition.TOP,
-        backgroundColor: Colors.red,
+        backgroundColor: color,
         reverseAnimationCurve: Curves.easeIn,
         positionOffset: 20,
         icon: const Icon(

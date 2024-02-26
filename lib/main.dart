@@ -1,13 +1,19 @@
+import 'package:cv_maker/firebase_options.dart';
 import 'package:cv_maker/resources/consts/color.dart';
 import 'package:cv_maker/utils/routes/routes.dart';
 import 'package:cv_maker/utils/routes/routes_name.dart';
 import 'package:cv_maker/view/auth_screen/login_screen.dart';
 import 'package:cv_maker/view_model/auth_view_model.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   runApp(const MyApp());
 }
 
@@ -26,10 +32,10 @@ class MyApp extends StatelessWidget {
 
           theme: ThemeData(
             textTheme: GoogleFonts.robotoTextTheme(),
-            colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-            useMaterial3: true,
+            // colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+            // useMaterial3: true,
           ),
-          initialRoute: RoutesName.home,
+          initialRoute: RoutesName.splash,
           onGenerateRoute: Routes.generateRoute,
           //home: const LoginScreen(),
         ));
