@@ -19,7 +19,15 @@ class _HomeContainerState extends State<HomeContainer> {
       height: widget.height * 0.17,
       width: double.infinity,
       decoration: BoxDecoration(
-          color: Color(0xffF5D7DB), borderRadius: BorderRadius.circular(25)),
+          color: Color(0xffF5D7DB),
+          borderRadius: BorderRadius.circular(25),
+          boxShadow: const [
+            BoxShadow(
+              color: Colors.black45,
+              blurRadius: 10,
+              offset: Offset(4, 4),
+            )
+          ]),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [

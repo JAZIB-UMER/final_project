@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:cv_maker/repository/services/shared_pref_services.dart';
 import 'package:cv_maker/repository/services/user_id.dart';
 import 'package:cv_maker/resources/consts/consts.dart';
 import 'package:cv_maker/utils/routes/routes_name.dart';
@@ -15,10 +16,12 @@ class SplashServices {
     if (user != null) {
       SessionController().userId = user.uid.toString();
       Timer(const Duration(seconds: 3),
-          () => Navigator.pushReplacementNamed(context, RoutesName.home));
+          () => Navigator.pushReplacementNamed(context, RoutesName.homeScreen));
     } else {
-      Timer(const Duration(seconds: 3),
-          () => Navigator.pushReplacementNamed(context, RoutesName.login));
+      Timer(
+          const Duration(seconds: 3),
+          () =>
+              Navigator.pushReplacementNamed(context, RoutesName.loginScreen));
     }
   }
 
@@ -26,8 +29,9 @@ class SplashServices {
     final auth = FirebaseAuth.instance;
     auth.signOut().then((value) {
       SessionController().userId = '';
+      SharedPreferencesHelper().clearPreferences();
       Navigator.pushNamedAndRemoveUntil(
-          context, RoutesName.login, (route) => false);
+          context, RoutesName.loginScreen, (route) => false);
     }).onError((error, stackTrace) {
       Utils.flushBarErrorMessage(error.toString(), Colors.red, context);
     });

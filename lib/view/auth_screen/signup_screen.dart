@@ -1,4 +1,5 @@
 import 'package:cv_maker/repository/services/firebase_services.dart';
+import 'package:cv_maker/repository/services/shared_pref_services.dart';
 import 'package:cv_maker/utils/routes/routes_name.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -46,11 +47,14 @@ class _SignUpScreenState extends State<SignUpScreen> {
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Center(
-                child: SizedBox(
-                  height: height * 0.3,
-                  width: width * 0.3,
-                  child: Image.asset('assets/icons/cv_maker_logo.png'),
+              Hero(
+                tag: 'icon',
+                child: Center(
+                  child: SizedBox(
+                    height: height * 0.3,
+                    width: width * 0.3,
+                    child: Image.asset('assets/icons/cv_maker_logo.png'),
+                  ),
                 ),
               ),
               Text(
@@ -135,13 +139,18 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               _emailController.text,
                               _passwordController.text,
                               _userNameController.text)
-                          .then((value) {
+                          .then((value) async {
+                        //Shared Preferences
+                        await SharedPreferencesHelper().setData(
+                            _userNameController.text.toString(),
+                            _emailController.text.toString());
                         _emailController.clear();
                         _passwordController.clear();
                         _userNameController.clear();
+
                         object.setLoading(false);
                         Navigator.pushReplacementNamed(
-                            context, RoutesName.home);
+                            context, RoutesName.homeScreen);
                       }).onError((error, stackTrace) {
                         object.setLoading(false);
                         Utils.flushBarErrorMessage(

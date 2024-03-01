@@ -1,9 +1,11 @@
 import 'package:cv_maker/repository/services/firebase_services.dart';
+import 'package:cv_maker/repository/services/shared_pref_services.dart';
 import 'package:cv_maker/resources/components/round_button.dart';
 import 'package:cv_maker/resources/consts/consts.dart';
 import 'package:cv_maker/utils/routes/routes_name.dart';
 import 'package:cv_maker/utils/utils.dart';
 import 'package:cv_maker/view_model/auth_view_model.dart';
+import 'package:firebase_database/firebase_database.dart';
 
 import 'package:provider/provider.dart';
 
@@ -27,6 +29,7 @@ class _LoginScreenState extends State<LoginScreen> {
   void dispose() {
     _emailController.dispose();
     _passwordController.dispose();
+
     super.dispose();
   }
 
@@ -43,11 +46,14 @@ class _LoginScreenState extends State<LoginScreen> {
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Center(
-                child: SizedBox(
-                  height: height * 0.3,
-                  width: width * 0.3,
-                  child: Image.asset('assets/icons/cv_maker_logo.png'),
+              Hero(
+                tag: 'icon',
+                child: Center(
+                  child: SizedBox(
+                    height: height * 0.3,
+                    width: width * 0.3,
+                    child: Image.asset('assets/icons/cv_maker_logo.png'),
+                  ),
                 ),
               ),
               TextFormField(
@@ -91,9 +97,9 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
               InkWell(
                 onTap: () {
-                  Navigator.pushNamed(context, RoutesName.signUp);
+                  Navigator.pushNamed(context, RoutesName.signUpScreen);
                 },
-                child: const Text('Dont Have an account'),
+                child: const Text('Don\'t Have an account'),
               ),
               const SizedBox(
                 height: 10,
@@ -117,11 +123,16 @@ class _LoginScreenState extends State<LoginScreen> {
                       await _firebaseservices
                           .login(context, _emailController.text,
                               _passwordController.text)
-                          .then((value) {
+                          .then((value) async {
                         object.setLoading(false);
                         _emailController.clear();
                         _passwordController.clear();
-                        Navigator.pushNamed(context, RoutesName.home);
+
+                        //-----
+                        //fetching userdata
+                        await SharedPreferencesHelper().fetchData();
+                        Navigator.pushReplacementNamed(
+                            context, RoutesName.homeScreen);
                       }).onError((error, stackTrace) {
                         object.setLoading(false);
                         Utils.flushBarErrorMessage(

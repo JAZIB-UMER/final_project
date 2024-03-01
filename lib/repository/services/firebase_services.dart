@@ -13,6 +13,9 @@ class FireBaseServices {
   //RealTime DataBase
   DatabaseReference ref = FirebaseDatabase.instance.ref().child('User');
 
+  //Firestore database
+  final fireStore = FirebaseFirestore.instance.collection('users');
+
   Future<dynamic> login(
       BuildContext context, String email, String password) async {
     try {
@@ -48,5 +51,33 @@ class FireBaseServices {
     } catch (e) {
       throw e.toString();
     }
+  }
+
+  Future<dynamic> addData(BuildContext context, String picture,
+      {required String name,
+      required String email,
+      required String? experience,
+      required String phoneNumber,
+      required List<Map<String, dynamic>> education,
+      required List<Map<String, dynamic>> skills,
+      required List<Map<String, dynamic>> languages}) async {
+    var id = DateTime.now().millisecondsSinceEpoch.toString();
+
+    await fireStore.doc(SessionController().userId.toString()).update({
+      id: {
+        'name': name,
+        'email': email,
+        'phoneNo': phoneNumber,
+        'experience': experience,
+        'picture': picture,
+        'educations': education,
+        'skills': skills,
+        'languages': languages,
+      },
+    }).then((value) {
+      Utils.flushBarErrorMessage('Successfully added', Colors.blue, context);
+    }).onError((error, stackTrace) {
+      Utils.toastMessage(error.toString());
+    });
   }
 }

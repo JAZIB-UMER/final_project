@@ -21,49 +21,52 @@ class SmallContainer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.symmetric(vertical: 2, horizontal: 15),
-      margin: const EdgeInsets.all(13),
-      width: width * 0.4,
-      height: height * 0.2,
-      decoration: BoxDecoration(
-          color: color,
-          borderRadius: BorderRadius.circular(25),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black54,
-              blurRadius: 10,
-              offset: Offset(6, 6),
-            )
-          ]),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          SizedBox(
-            width: width * 0.28,
-            child: Image.asset(
-              assetImage,
-              fit: BoxFit.contain,
+    return InkWell(
+      onTap: onPress,
+      child: Container(
+        padding: EdgeInsets.symmetric(vertical: 2, horizontal: 15),
+        margin: const EdgeInsets.all(13),
+        width: width * 0.4,
+        height: height * 0.2,
+        decoration: BoxDecoration(
+            color: color,
+            borderRadius: BorderRadius.circular(25),
+            boxShadow: const [
+              BoxShadow(
+                color: Colors.black54,
+                blurRadius: 10,
+                offset: Offset(6, 6),
+              )
+            ]),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            SizedBox(
+              width: width * 0.28,
+              child: Image.asset(
+                assetImage,
+                fit: BoxFit.contain,
 
-              //color: Colors.black,
+                //color: Colors.black,
+              ),
             ),
-          ),
-          // SizedBox(
-          //   height: 5,
-          // ),
-          Text(
-            mainHeading,
-            style: TextStyle(
-              fontWeight: FontWeight.w600,
+            // SizedBox(
+            //   height: 5,
+            // ),
+            Text(
+              mainHeading,
+              style: TextStyle(
+                fontWeight: FontWeight.w600,
+              ),
             ),
-          ),
-          Text(
-            subHeading,
-            maxLines: 2,
-            style: TextStyle(fontSize: 12),
-          ),
-          //Text('sfsaf'),
-        ],
+            Text(
+              subHeading,
+              maxLines: 2,
+              style: TextStyle(fontSize: 12),
+            ),
+            //Text('sfsaf'),
+          ],
+        ),
       ),
     );
   }
